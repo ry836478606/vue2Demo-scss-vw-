@@ -1,0 +1,7 @@
+.mint-switch-input:checked + .mint-switch-core{
+  border-color: #f00;
+  background-color: #f00;
+}
+.mint-switch-core::before{
+  width: 30px;
+}

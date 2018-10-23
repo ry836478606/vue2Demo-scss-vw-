@@ -1,0 +1,134 @@
+////命名语义化
+///*
+//{
+//  变量： 样式属性，值；
+//  混合器： 同类的样式组合；
+//  继承： 语义化整体标签样式（如：typeError @extend error）
+//}
+//*/
+//
+//// 样式继承,(不要用后代选择器（如.a .b @extend .c，正确：.b @extend .c）去继承别人的样式)
+//.line #aa{
+//  margin-top: 10px;
+//}
+//#aa .aaa{
+//  color: blue;
+//  font-size: 30px;
+//}
+//.bbb{
+//  @extend #aa; // @extend #aa .aaa 无法继承嵌套选择器;
+//  // if else编程
+//  @if 2>3{
+//    background: orangered;
+//  } @else{
+//    background: purple;
+//  }
+//}
+//
+//// 占位符（%placeholder 声明的代码，如果不被 @extend 调用的话，不会产生任何代码）
+//%mt100 {
+//  margin-top: 10px;
+//}
+//
+//// 混合器
+//@mixin flex($wrap: nowrap, $align: center, $justify: center){
+//  display: flex;
+//  flex-wrap: $wrap;
+//  align-items: $align;
+//  justify-content: $justify;
+//}
+//
+//// 函数编程
+//@function double($n){
+//  @return $n * 2
+//}
+//
+//// for编程
+//@for $i from 1 to 3{ // 1 to 3 包含1，2
+//  .border-#{$i}{
+//    @extend %mt100;
+//    @include flex($justify: space-between);
+//    border: #{$i}px solid blue {
+//      width: double(10px);
+//    };
+//  }
+//}
+
+$color: #333;
+$theme-color: #009FFF;
+$common-btn-height: 45px;
+
+@mixin pos-absolute($direction-h: left, $direction-v: top, $value-h: 0, $value-v: 0, $z-index: 1){
+  position: absolute;
+  #{$direction-h}: $value-h;
+  #{$direction-v}: $value-v;
+  z-index: $z-index;
+}
+@mixin display-flex($align: center, $justify: flex-start, $wrap: nowrap){
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+  flex-wrap: $wrap;
+}
+@mixin fixed-wrap($vertical: top, $height: $common-btn-height){
+  position: fixed;
+  left: 0;
+  @if($vertical == top){
+    top: 0;
+  }@else{
+    bottom: 0
+  }
+  width: 100%;
+  height: $height;
+  background-color: #fff;
+  overflow-y: scroll;
+  box-sizing: border-box;
+}
+@mixin fixed-bot-btn(){
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: $common-btn-height;
+  line-height: $common-btn-height;
+  font-size: 16px;
+  color: #fff;
+  background: $theme-color;
+  text-align: center;
+}
+@mixin common-radius-btn($width: 100%, $height: $common-btn-height, $radius: 4px){
+  width: $width;
+  height: $height;
+  line-height: $height;
+  font-size: 16px;
+  color: #fff;
+  border-radius: $radius;
+  background: linear-gradient(90deg, #11B8F5, $theme-color);
+  text-align: center;
+}
+@mixin common-radius50-btn($width: 100%, $height: $common-btn-height){
+  width: $width;
+  height: $height;
+  padding: 0 15px;
+  line-height: $height;
+  font-size: 14px;
+  color: #fff;
+  border-radius: 100px;
+  background: linear-gradient(90deg, #11B8F5, $theme-color);
+  text-align: center;
+}
+@mixin common-radius50empty-btn($width: 100%, $height: $common-btn-height){
+  width: $width;
+  height: $height;
+  padding: 0 15px;
+  line-height: $height;
+  font-size: 14px;
+  color: $theme-color;
+  border-radius: 100px;
+  border: 1px solid $theme-color;
+  text-align: center;
+  box-sizing: border-box;
+  background: transparent;
+}
+// 通过border-image解决上下border: 1px问题
+@svg 1px-border { height: 2px; @rect { fill: var(--color, black); width: 100%; height: 50%; } }
